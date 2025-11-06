@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров - Pencraft</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили логотипа для каталога - принудительное применение */
+        .header .logo {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            text-decoration: none !important;
+            color: #0f172a !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .header .logo:hover {
+            text-decoration: none !important;
+            color: #0f172a !important;
+            transform: scale(1.05) !important;
+        }
+
+        .header .logo-icon {
+            width: 40px !important;
+            height: 40px !important;
+            background: linear-gradient(135deg, #2563eb, #06b6d4) !important;
+            border-radius: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 1.5rem !important;
+            color: white !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .header .logo:hover .logo-icon {
+            transform: rotate(5deg) !important;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+        }
+
+        .header .logo-text {
+            font-size: 1.5rem !important;
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, #2563eb, #06b6d4) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .header .logo:hover .logo-text {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+
+        /* Стили для каталога */
+        .catalog-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px 0;
+        }
+        
+        .catalog-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .catalog-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .catalog-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 10px;
+        }
+        
+        .catalog-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 20px;
+        }
+        
+        /* Быстрые фильтры */
+        .quick-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-filter-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #374151;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .quick-filter-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+        
+        .quick-filter-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+        
+        .catalog-layout {
+            display: flex;
+            gap: 30px;
+            align-items: start;
+        }
+        
+        .filters-sidebar {
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            height: calc(100vh - 100px);
+            max-height: 800px;
+            position: sticky;
+            top: 20px;
+            border: 1px solid #f0f0f0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .filters-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            scrollbar-width: thin;
+            scrollbar-color: #e5e7eb #f9fafb;
+        }
+        
+        .filters-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .filters-content::-webkit-scrollbar-track {
+            background: #f9fafb;
+            border-radius: 3px;
+        }
+        
+        .filters-content::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        
+        .filters-content::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db;
+        }
+        
+        .filters-header {
+            padding: 20px 30px 0 30px;
+            border-bottom: 1px solid #f0f0f0;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        
+        .filters-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .filters-footer {
+            padding: 0 30px 20px 30px;
+            border-top: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group h4 {
+            margin: 0 0 15px 0;
+            color: #374151;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-option:hover {
+            color: #2563eb;
+        }
+        
+        .filter-option input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #2563eb;
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+            font-size: 14px;
+            color: #4b5563;
+        }
+        
+        /* Стили для новых фильтров */
+        .filter-group h4 {
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        
+        .filter-option {
+            padding: 10px 0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-option:hover {
+            background: #f8fafc;
+            padding-left: 8px;
+        }
+        
+        .filter-option input[type="checkbox"]:checked + label,
+        .filter-option input[type="radio"]:checked + label {
+            color: #2563eb;
+            font-weight: 500;
+        }
+        
+        .filter-option input[type="checkbox"]:checked,
+        .filter-option input[type="radio"]:checked {
+            accent-color: #2563eb;
+        }
+        
+        /* Стили для звездочек рейтинга */
+        .filter-option label[for*="rating"] {
+            font-size: 16px;
+        }
+        
+        /* Анимация для фильтров */
+        .filter-option {
+            animation: fadeInUp 0.3s ease forwards;
+        }
+        
+        .filter-option:nth-child(1) { animation-delay: 0.1s; }
+        .filter-option:nth-child(2) { animation-delay: 0.2s; }
+        .filter-option:nth-child(3) { animation-delay: 0.3s; }
+        .filter-option:nth-child(4) { animation-delay: 0.4s; }
+        .filter-option:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Стили для активных фильтров */
+        .active-filters {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .active-filter-tag {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .active-filter-tag:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
+        
+        .active-filter-tag::after {
+            content: ' ×';
+            margin-left: 4px;
+            font-weight: bold;
+        }
+        
+        /* Статистика фильтров */
+        .filter-stats {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #f0f9ff;
+            border-radius: 6px;
+            border: 1px solid #bae6fd;
+        }
+        
+        .price-range {
+            margin-top: 15px;
+        }
+        
+        .price-inputs {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .price-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .price-slider {
+            width: 100%;
+            margin: 15px 0;
+        }
+        
+        .products-section {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .results-count {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .sort-label {
+            font-size: 14px;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            order: 3;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 450px;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-card:hover .product-image::after {
+            opacity: 1;
+        }
+        
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .product-info h3 {
+            margin: 0 0 10px 0;
+            color: #1a202c;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .product-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+        
+        /* Стили для рейтинга */
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .star {
+            font-size: 16px;
+            line-height: 1;
+        }
+        
+        .star.full {
+            color: #fbbf24;
+        }
+        
+        .star.half {
+            color: #fbbf24;
+            opacity: 0.7;
+        }
+        
+        .star.empty {
+            color: #d1d5db;
+        }
+        
+        .rating-text {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        /* Исправления для отображения изображений */
+        .product-image {
+            position: relative !important;
+            overflow: hidden !important;
+            width: 100% !important;
+            height: 300px !important;
+            background: #f8f9fa !important;
+            border-radius: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .product-image img {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            border-radius: 12px !important;
+            width: auto !important;
+            height: auto !important;
+        }
+        
+        .product-image img[src*="http"] {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 1 !important;
+        }
+        
+        .product-image img[src*="images/products"] {
+            width: 64px !important;
+            height: 64px !important;
+            object-fit: contain !important;
+            position: static !important;
+        }
+        
+        .price {
+            color: #2563eb;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .btn-add {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+        
+        .pagination button {
+            padding: 10px 15px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #f3f4f6;
+            border-color: #2563eb;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination .active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+        
+        .no-products {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            font-size: 18px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .catalog-layout {
+                flex-direction: column;
+            }
+            
+            .filters-sidebar {
+                width: 100%;
+                position: static;
+                order: 1;
+                height: auto;
+                max-height: none;
+            }
+            
+            .filters-content {
+                max-height: 400px;
+            }
+            
+            .products-section {
+                order: 2;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .catalog-container {
+                padding: 0 15px;
+            }
+            
+            .catalog-title {
+                font-size: 2rem;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .product-card {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .catalog-page {
+                padding: 10px 0;
+            }
+            
+            .catalog-container {
+                padding: 0 10px;
+            }
+            
+            .results-header {
+                padding: 15px;
+                border-radius: 12px;
+            }
+            
+            .product-card {
+                padding: 20px;
+            }
+        }
+        
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* Дополнительные улучшения */
+        .catalog-layout {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .filter-option {
+            font-weight: 500;
+        }
+        
+        /* Улучшение контрастности */
+        .product-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .product-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Заголовок -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <span class="logo-icon">✒️</span>
+                        <span class="logo-text">PenCraft</span>
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Главная</a>
+                    <a href="catalog.html" class="nav-link active">Каталог</a>
+                    <a href="about.html" class="nav-link">О нас</a>
+                </nav>
+                <div class="user-menu">
+                    <span class="user-name" id="userName">Пользователь</span>
+                    <a href="cart.html" class="cart-link">
+                        🛒 <span id="cartCount">0</span>
+                    </a>
+                    <button class="btn btn-outline" onclick="logout()">Выйти</button>
+                    </div>
+                </div>
+        </div>
+    </header>
+
+    <!-- Содержимое каталога -->
+    <section class="catalog-page">
+        <div class="container catalog-container">
+            <div class="catalog-header">
+                <h2 class="catalog-title">Каталог товаров</h2>
+                <p class="catalog-subtitle">Найдите идеальные канцелярские принадлежности для работы и творчества</p>
+                
+                <div class="search-bar">
+                    <input type="text" id="mainSearch" class="search-input" placeholder="Поиск товаров...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                
+                <!-- Быстрые фильтры -->
+                <div class="quick-filters">
+                    <button class="quick-filter-btn" onclick="applyQuickFilter('popular')">
+                        ⭐ Популярные
+                    </button>
+                    <button class="quick-filter-btn" onclick="applyQuickFilter('new')">
+                        🆕 Новинки
+                    </button>
+                    <button class="quick-filter-btn" onclick="applyQuickFilter('sale')">
+                        💰 Скидки
+                    </button>
+                    <button class="quick-filter-btn" onclick="applyQuickFilter('cheap')">
+                        💵 До 500₽
+                    </button>
+                </div>
+            </div>
+
+    <div class="catalog-layout">
+                <!-- Фильтры -->
+                <div class="filters-sidebar">
+            <div class="filters-header">
+                <h3>Фильтры</h3>
+            </div>
+            
+            <div class="filters-content">
+                        <!-- Поиск -->
+                <div class="filter-group">
+                <h4>Поиск</h4>
+                            <input type="text" id="searchInput" class="search-input" placeholder="Название товара...">
+            </div>
+            
+                        <!-- Категории -->
+            <div class="filter-group">
+                <h4>Категории</h4>
+                <div class="filter-options" id="categoryFilters">
+                                <!-- Категории будут добавлены динамически -->
+                </div>
+            </div>
+            
+                        <!-- Ценовой диапазон -->
+            <div class="filter-group">
+                <h4>Цена</h4>
+                <div class="price-range">
+                                <input type="range" id="priceRange" class="price-slider" min="0" max="50000" value="50000">
+                                <div class="price-inputs">
+                                    <input type="number" id="minPrice" class="price-input" placeholder="От" min="0">
+                                    <input type="number" id="maxPrice" class="price-input" placeholder="До" max="50000">
+                    </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Быстрые фильтры по цене -->
+                        <div class="filter-group">
+                            <h4>Быстрый выбор</h4>
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="radio" name="priceRange" id="range0" value="0-500">
+                                    <label for="range0">До 500 ₽</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" name="priceRange" id="range1" value="500-1000">
+                                    <label for="range1">500-1000 ₽</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" name="priceRange" id="range2" value="1000-2000">
+                                    <label for="range2">1000-2000 ₽</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" name="priceRange" id="range3" value="2000+">
+                                    <label for="range3">От 2000 ₽</label>
+                    </div>
+                </div>
+            </div>
+            
+                        <!-- Фильтр по популярности -->
+            <div class="filter-group">
+                            <h4>Популярность</h4>
+                <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="popular" value="popular">
+                                    <label for="popular">Популярные товары</label>
+                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="new" value="new">
+                                    <label for="new">Новинки</label>
+            </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="sale" value="sale">
+                                    <label for="sale">Скидки</label>
+            </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Фильтр по брендам -->
+                        <div class="filter-group">
+                            <h4>Бренды</h4>
+                            <div class="filter-options" id="brandFilters">
+                                <!-- Бренды будут добавлены динамически -->
+                            </div>
+            </div>
+            
+                        <!-- Фильтр по рейтингу -->
+                        <div class="filter-group">
+                            <h4>Рейтинг</h4>
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="radio" name="rating" id="rating5" value="5">
+                                    <label for="rating5">⭐⭐⭐⭐⭐ (5 звезд)</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" name="rating" id="rating4" value="4">
+                                    <label for="rating4">⭐⭐⭐⭐ (4+ звезд)</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="radio" name="rating" id="rating3" value="3">
+                                    <label for="rating3">⭐⭐⭐ (3+ звезд)</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Фильтр по наличию -->
+                        <div class="filter-group">
+                            <h4>Наличие</h4>
+                            <div class="filter-options">
+                                <div class="filter-option">
+                                    <input type="checkbox" id="inStock" value="inStock" checked>
+                                    <label for="inStock">В наличии</label>
+                                </div>
+                                <div class="filter-option">
+                                    <input type="checkbox" id="outOfStock" value="outOfStock">
+                                    <label for="outOfStock">Нет в наличии</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filters-footer">
+                        <div class="filter-stats" id="filterStats">
+                            <!-- Статистика фильтров -->
+                        </div>
+                        <div class="active-filters" id="activeFilters">
+                            <!-- Активные фильтры будут отображаться здесь -->
+                        </div>
+                        <button class="btn btn-primary" onclick="clearFilters()">Сбросить фильтры</button>
+                    </div>
+                </div>
+                
+                <!-- Товары -->
+                <div class="products-section">
+            <div class="results-header">
+                        <div class="results-count">
+                            Найдено товаров: <span id="resultsCount">0</span>
+                </div>
+                <div class="sort-controls">
+                            <span class="sort-label">Сортировка:</span>
+                            <select id="sortSelect" class="sort-select">
+                                <option value="newest">Сначала новые</option>
+                                <option value="price-low">Цена: по возрастанию</option>
+                                <option value="price-high">Цена: по убыванию</option>
+                                <option value="name">По названию</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                        <!-- Товары будут загружены динамически -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Пагинация будет добавлена динамически -->
+            </div>
+        </div>
+    </div>
+        </div>
+    </section>
+
+    <script>
+        // Глобальные переменные
+        let allProducts = [];
+        let filteredProducts = [];
+        let currentPage = 1;
+        const productsPerPage = 1000; // Показываем все товары на одной странице
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== Инициализация каталога ===');
+            loadProducts();
+            setupEventListeners();
+        });
+        
+        // Загрузка товаров
+        async function loadProducts() {
+            console.log('Загружаем товары...');
+            try {
+                const response = await fetch('pencraft/catalog_api.php?limit=1000');
+                console.log('Ответ API:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Данные товаров:', data);
+                
+                if (data.success && data.products) {
+                    allProducts = data.products;
+                    console.log('Загружено товаров:', allProducts.length);
+                    console.log('Первый товар:', allProducts[0]);
+                    
+                    // Выводим все названия товаров для отладки
+                    console.log('Все товары в каталоге:');
+                    allProducts.forEach((product, index) => {
+                        console.log(`${index + 1}. ${product.name}`);
+                    });
+                    
+                    // Инициализируем фильтры
+                    initializeFilters();
+                    
+                    // Применяем фильтры
+                    applyFilters();
+                    
+                    // Обновляем счетчик корзины
+                    updateCartCount();
+            } else {
+                    console.error('Ошибка загрузки товаров:', data.error);
+                    showError('Ошибка загрузки товаров');
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке товаров:', error);
+                showError('Ошибка при загрузке товаров: ' + error.message);
+            }
+        }
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Поиск
+            document.getElementById('mainSearch').addEventListener('input', applyFilters);
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            
+            // Сортировка
+            document.getElementById('sortSelect').addEventListener('change', applyFilters);
+            
+            // Ценовой диапазон
+            document.getElementById('priceRange').addEventListener('input', function() {
+                document.getElementById('maxPrice').value = this.value;
+                applyFilters();
+            });
+            
+            document.getElementById('minPrice').addEventListener('input', applyFilters);
+            document.getElementById('maxPrice').addEventListener('input', applyFilters);
+            
+            // Быстрые фильтры по цене
+            document.querySelectorAll('input[name="priceRange"]').forEach(radio => {
+                radio.addEventListener('change', applyFilters);
+            });
+        }
+        
+        // Инициализация фильтров
+        function initializeFilters() {
+            console.log('Инициализируем фильтры...');
+            
+            // Получаем уникальные категории
+            const categories = [...new Set(allProducts.map(product => product.category).filter(Boolean))];
+            console.log('Найденные категории:', categories);
+            
+            // Создаем фильтры категорий
+            const categoryFilters = document.getElementById('categoryFilters');
+            categoryFilters.innerHTML = categories.map(category => `
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-${category}" value="${category}">
+                    <label for="cat-${category}">${category}</label>
+                </div>
+            `).join('');
+            
+            // Добавляем обработчики для новых фильтров
+            categoryFilters.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+            
+            // Инициализируем фильтры брендов
+            initializeBrandFilters();
+            
+            // Добавляем обработчики для всех новых фильтров
+            setupAdvancedFilters();
+        }
+        
+        // Инициализация фильтров брендов
+        function initializeBrandFilters() {
+            // Извлекаем бренды из реальных товаров в каталоге
+            const brands = extractBrandsFromProducts();
+            console.log('Найденные бренды в каталоге:', brands);
+            
+            const brandFilters = document.getElementById('brandFilters');
+            if (brands.length > 0) {
+                brandFilters.innerHTML = brands.map(brand => `
+                    <div class="filter-option">
+                        <input type="checkbox" id="brand-${brand}" value="${brand}">
+                        <label for="brand-${brand}">${brand}</label>
+                    </div>
+                `).join('');
+                } else {
+                brandFilters.innerHTML = '<div style="color: #6b7280; font-size: 14px;">Бренды не найдены</div>';
+            }
+        }
+        
+        // Извлечение брендов из товаров
+        function extractBrandsFromProducts() {
+            const brandSet = new Set();
+            
+            allProducts.forEach(product => {
+                // Ищем бренды в названии товара
+                const name = product.name.toLowerCase();
+                
+                // Список возможных брендов для поиска
+                const possibleBrands = [
+                    'pilot', 'uni-ball', 'zebra', 'pentel', 'staedtler', 
+                    'faber-castell', 'stabilo', 'bic', 'paper mate', 'sharpie',
+                    'crayola', 'moleskine', 'leuchtturm', 'rhodia', 'clairefontaine',
+                    'parker', 'waterman', 'montblanc', 'lamy', 'pelikan',
+                    'rotring', 'sakura', 'tombow', 'mitsubishi', 'uni'
+                ];
+                
+                possibleBrands.forEach(brand => {
+                    if (name.includes(brand)) {
+                        // Капитализируем первую букву
+                        const capitalizedBrand = brand.charAt(0).toUpperCase() + brand.slice(1);
+                        brandSet.add(capitalizedBrand);
+                    }
+                });
+            });
+            
+            return Array.from(brandSet).sort();
+        }
+        
+        // Настройка продвинутых фильтров
+        function setupAdvancedFilters() {
+            // Фильтры популярности
+            document.querySelectorAll('#popular, #new, #sale').forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+            
+            // Фильтры брендов
+            document.querySelectorAll('#brandFilters input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+            
+            // Фильтры рейтинга
+            document.querySelectorAll('input[name="rating"]').forEach(radio => {
+                radio.addEventListener('change', applyFilters);
+            });
+            
+            // Фильтры наличия
+            document.querySelectorAll('#inStock, #outOfStock').forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+        }
+
+        // Применение фильтров
+        function applyFilters() {
+            console.log('=== Применяем фильтры ===');
+            
+            const searchTerm = document.getElementById('mainSearch').value.toLowerCase();
+            const filterSearchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value) || 50000;
+            
+            // Получаем выбранные категории
+            const selectedCategories = Array.from(document.querySelectorAll('#categoryFilters input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Получаем выбранный ценовой диапазон
+            const selectedPriceRange = document.querySelector('input[name="priceRange"]:checked')?.value;
+            
+            // Получаем фильтры популярности
+            const isPopular = document.getElementById('popular').checked;
+            const isNew = document.getElementById('new').checked;
+            const isSale = document.getElementById('sale').checked;
+            
+            // Получаем выбранные бренды
+            const selectedBrands = Array.from(document.querySelectorAll('#brandFilters input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            
+            // Получаем выбранный рейтинг
+            const selectedRating = document.querySelector('input[name="rating"]:checked')?.value;
+            
+            // Получаем фильтры наличия
+            const inStock = document.getElementById('inStock').checked;
+            const outOfStock = document.getElementById('outOfStock').checked;
+            
+            console.log('Параметры фильтрации:', {
+                searchTerm,
+                filterSearchTerm,
+                selectedCategories,
+                minPrice,
+                maxPrice,
+                selectedPriceRange,
+                isPopular,
+                isNew,
+                isSale,
+                selectedBrands,
+                selectedRating,
+                inStock,
+                outOfStock
+            });
+            
+            // Применяем все фильтры
+            filteredProducts = allProducts.filter(product => {
+                // Поиск по названию и описанию (объединяем оба поля поиска)
+                const searchText = (searchTerm + ' ' + filterSearchTerm).trim();
+                const matchesSearch = searchText === '' || 
+                    product.name.toLowerCase().includes(searchText) ||
+                    (product.description && product.description.toLowerCase().includes(searchText));
+                
+                // Фильтр по категории
+                const matchesCategory = selectedCategories.length === 0 || 
+                    selectedCategories.some(category => 
+                        (product.category && product.category.toLowerCase().includes(category.toLowerCase())) ||
+                        product.name.toLowerCase().includes(category.toLowerCase())
+                    );
+                
+                // Фильтр по цене
+                const price = parseFloat(product.price);
+                const matchesPrice = price >= minPrice && price <= maxPrice;
+                
+                // Фильтр по ценовому диапазону
+                let matchesPriceRange = true;
+                if (selectedPriceRange) {
+                    switch (selectedPriceRange) {
+                        case '0-500':
+                            matchesPriceRange = price <= 500;
+                            break;
+                        case '500-1000':
+                            matchesPriceRange = price > 500 && price <= 1000;
+                            break;
+                        case '1000-2000':
+                            matchesPriceRange = price > 1000 && price <= 2000;
+                            break;
+                        case '2000+':
+                            matchesPriceRange = price > 2000;
+                            break;
+                    }
+                }
+                
+                // Фильтр по популярности
+                let matchesPopularity = true;
+                if (isPopular || isNew || isSale) {
+                    matchesPopularity = false;
+                    
+                    if (isPopular) {
+                        // Считаем популярными товары с ценой до 1000 рублей
+                        matchesPopularity = matchesPopularity || price <= 1000;
+                    }
+                    
+                    if (isNew) {
+                        // Считаем новинками товары, созданные недавно
+                        const productDate = new Date(product.created_at);
+                        const now = new Date();
+                        const daysDiff = (now - productDate) / (1000 * 60 * 60 * 24);
+                        matchesPopularity = matchesPopularity || daysDiff <= 30;
+                    }
+                    
+                    if (isSale) {
+                        // Считаем товарами со скидкой те, что дешевле 500 рублей
+                        matchesPopularity = matchesPopularity || price <= 500;
+                    }
+                }
+                
+                // Фильтр по брендам
+                const matchesBrand = selectedBrands.length === 0 || 
+                    selectedBrands.some(brand => 
+                        product.name.toLowerCase().includes(brand.toLowerCase())
+                    );
+                
+                // Фильтр по рейтингу
+                let matchesRating = true;
+                if (selectedRating) {
+                    const productRating = getProductRating(product);
+                    matchesRating = productRating >= parseInt(selectedRating);
+                }
+                
+                // Фильтр по наличию
+                let matchesStock = true;
+                if (inStock && !outOfStock) {
+                    // Показываем только товары в наличии (симуляция)
+                    matchesStock = Math.random() > 0.1; // 90% товаров в наличии
+                } else if (!inStock && outOfStock) {
+                    // Показываем только товары не в наличии
+                    matchesStock = Math.random() <= 0.1; // 10% товаров не в наличии
+                }
+                
+                return matchesSearch && matchesCategory && matchesPrice && matchesPriceRange && 
+                       matchesPopularity && matchesBrand && matchesRating && matchesStock;
+            });
+            
+            console.log('Отфильтровано товаров:', filteredProducts.length);
+            
+            // Сортировка
+            const sortBy = document.getElementById('sortSelect').value;
+            sortProducts(sortBy);
+            
+            // Обновляем отображение
+            currentPage = 1;
+            updateResultsCount();
+            updateActiveFilters();
+            updateFilterStats();
+            saveFiltersState();
+            displayProducts();
+        }
+        
+        // Обновление активных фильтров
+        function updateActiveFilters() {
+            const activeFiltersContainer = document.getElementById('activeFilters');
+            if (!activeFiltersContainer) return;
+            
+            const activeFilters = [];
+            
+            // Поиск
+            const searchTerm = document.getElementById('mainSearch').value;
+            const filterSearchTerm = document.getElementById('searchInput').value;
+            if (searchTerm) activeFilters.push({ type: 'search', label: `Поиск: "${searchTerm}"`, value: searchTerm });
+            if (filterSearchTerm) activeFilters.push({ type: 'filterSearch', label: `Фильтр: "${filterSearchTerm}"`, value: filterSearchTerm });
+            
+            // Цена
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            if (minPrice || maxPrice) {
+                const priceLabel = `Цена: ${minPrice || '0'} - ${maxPrice || '∞'} ₽`;
+                activeFilters.push({ type: 'price', label: priceLabel, value: { min: minPrice, max: maxPrice } });
+            }
+            
+            // Категории
+            const selectedCategories = Array.from(document.querySelectorAll('#categoryFilters input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            selectedCategories.forEach(category => {
+                activeFilters.push({ type: 'category', label: category, value: category });
+            });
+            
+            // Популярность
+            if (document.getElementById('popular').checked) activeFilters.push({ type: 'popular', label: 'Популярные', value: 'popular' });
+            if (document.getElementById('new').checked) activeFilters.push({ type: 'new', label: 'Новинки', value: 'new' });
+            if (document.getElementById('sale').checked) activeFilters.push({ type: 'sale', label: 'Скидки', value: 'sale' });
+            
+            // Бренды
+            const selectedBrands = Array.from(document.querySelectorAll('#brandFilters input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            selectedBrands.forEach(brand => {
+                activeFilters.push({ type: 'brand', label: brand, value: brand });
+            });
+            
+            // Рейтинг
+            const selectedRating = document.querySelector('input[name="rating"]:checked')?.value;
+            if (selectedRating) {
+                const stars = '⭐'.repeat(parseInt(selectedRating));
+                activeFilters.push({ type: 'rating', label: `Рейтинг: ${stars}`, value: selectedRating });
+            }
+            
+            // Наличие
+            if (document.getElementById('outOfStock').checked) {
+                activeFilters.push({ type: 'stock', label: 'Нет в наличии', value: 'outOfStock' });
+            }
+            
+            // Отображаем активные фильтры
+            if (activeFilters.length > 0) {
+                activeFiltersContainer.innerHTML = `
+                    <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">Активные фильтры:</div>
+                    ${activeFilters.map(filter => `
+                        <span class="active-filter-tag" onclick="removeFilter('${filter.type}', '${filter.value}')">
+                            ${filter.label}
+                        </span>
+                    `).join('')}
+                `;
+            } else {
+                activeFiltersContainer.innerHTML = '';
+            }
+        }
+        
+        // Удаление отдельного фильтра
+        function removeFilter(type, value) {
+            switch (type) {
+                case 'search':
+                    document.getElementById('mainSearch').value = '';
+                    break;
+                case 'filterSearch':
+                    document.getElementById('searchInput').value = '';
+                    break;
+                case 'price':
+                    document.getElementById('minPrice').value = '';
+                    document.getElementById('maxPrice').value = '50000';
+                    document.getElementById('priceRange').value = '50000';
+                    break;
+                case 'category':
+                    document.querySelector(`#categoryFilters input[value="${value}"]`).checked = false;
+                    break;
+                case 'popular':
+                    document.getElementById('popular').checked = false;
+                    break;
+                case 'new':
+                    document.getElementById('new').checked = false;
+                    break;
+                case 'sale':
+                    document.getElementById('sale').checked = false;
+                    break;
+                case 'brand':
+                    document.querySelector(`#brandFilters input[value="${value}"]`).checked = false;
+                    break;
+                case 'rating':
+                    document.querySelector(`input[name="rating"][value="${value}"]`).checked = false;
+                    break;
+                case 'stock':
+                    document.getElementById('outOfStock').checked = false;
+                    break;
+            }
+            applyFilters();
+        }
+        
+        // Обновление статистики фильтров
+        function updateFilterStats() {
+            const filterStatsContainer = document.getElementById('filterStats');
+            if (!filterStatsContainer) return;
+            
+            const totalProducts = allProducts.length;
+            const filteredProductsCount = filteredProducts.length;
+            const filterPercentage = totalProducts > 0 ? Math.round((filteredProductsCount / totalProducts) * 100) : 0;
+            
+            filterStatsContainer.innerHTML = `
+                <div style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 10px;">
+                    Показано ${filteredProductsCount} из ${totalProducts} товаров (${filterPercentage}%)
+                </div>
+            `;
+        }
+        
+        // Быстрые фильтры
+        function applyQuickFilter(filterType) {
+            // Сбрасываем все фильтры
+            clearFilters();
+            
+            // Применяем быстрый фильтр
+            switch (filterType) {
+                case 'popular':
+                    document.getElementById('popular').checked = true;
+                    break;
+                case 'new':
+                    document.getElementById('new').checked = true;
+                    break;
+                case 'sale':
+                    document.getElementById('sale').checked = true;
+                    break;
+                case 'cheap':
+                    document.getElementById('maxPrice').value = '500';
+                    document.querySelector('input[name="priceRange"][value="0-500"]').checked = true;
+                    break;
+            }
+            
+            // Обновляем состояние кнопок
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyFilters();
+        }
+
+        // Сортировка товаров
+        function sortProducts(sortBy) {
+            switch (sortBy) {
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'price-low':
+                    filteredProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                    break;
+                case 'newest':
+                default:
+                    filteredProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    break;
+            }
+        }
+        
+        // Функция для получения изображения товара по категории
+        function getProductIcon(product) {
+            const category = (product.category || '').toLowerCase();
+            const name = (product.name || '').toLowerCase();
+            
+            console.log('Проверяем товар:', product.name, '| name:', name, '| category:', category);
+            
+            // Список рабочих URL изображений
+            const workingImages = [
+                'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop&crop=center&auto=format',
+                'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop&crop=center&auto=format'
+            ];
+            
+            // Специфичные условия для конкретных товаров (в порядке приоритета)
+                        // Товар 1: Гелевая ручка Premium
+            if (name.includes('premium') && name.includes('гелевая')) {
+                console.log('🔍 Найден Гелевая ручка Premium:', product.name);
+                return 'https://i.ebayimg.com/images/g/XVcAAOSw24lnPcYu/s-l1600.jpg';
+            }
+
+            // Товар 2: Шариковая ручка Classic
+            if (name.includes('classic') && name.includes('шариковая')) {
+                console.log('🔍 Найден Шариковая ручка Classic:', product.name);
+                return 'https://de2wfhoo6xqi5.cloudfront.net/orig/ca6/471/b7375af054765026dba0862d3d143b7124.jpg';
+            }
+
+            // Товар 3: Ручка-роллер Smooth
+            if (name.includes('smooth') && name.includes('роллер')) {
+                console.log('🔍 Найден Ручка-роллер Smooth:', product.name);
+                return 'https://all4promo.ru/upload/iblock/a6e/a6efe55c2fa3dc7870be56db0f25f867.jpg';
+            }
+
+            // Товар 4: Авторучка Elegant
+            if (name.includes('elegant') && name.includes('авторучка')) {
+                console.log('🔍 Найден Авторучка Elegant:', product.name);
+                return 'https://m.media-amazon.com/images/I/51COfAlycOS._AC_UL960_QL65_.jpg';
+            }
+
+            // Товар 5: Ручка Parker Premium
+            if (name.includes('parker') && name.includes('premium')) {
+                console.log('🔍 Найден Ручка Parker Premium:', product.name);
+                return 'https://ir-3.ozone.ru/s3/multimedia-3/c1000/6607783767.jpg';
+            }
+
+            // Товар 6: Ручка Waterman Expert
+            if (name.includes('waterman') && name.includes('expert')) {
+                console.log('🔍 Найден Ручка Waterman Expert:', product.name);
+                return 'https://cdn.vseinstrumenti.ru/images/goods/tovary-dlya-ofisa-i-doma/snabzhenie-i-osnaschenie-ofisa/5014854/1200x800/64868208.jpg';
+            }
+
+            // Товар 7: Ручка Pilot G2
+            if (name.includes('pilot') && name.includes('g2')) {
+                console.log('🔍 Найден Ручка Pilot G2:', product.name);
+                return 'https://i.yavitrina.ru/ruchka-gelevaya-avtomaticheskaya-pilot-quot-g-2-quot-chernaya-0-5mm-grip-art-028684-100490353';
+            }
+
+            // Товар 8: Ручка Uni-ball Signo
+            if (name.includes('uni-ball') && name.includes('signo')) {
+                console.log('🔍 Найден Ручка Uni-ball Signo:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=27745417407770e57c7ca3325bd0ad73_l-5435106-images-thumbs&n=13';
+            }
+
+            // Товар 9: Набор ручек Study (10 шт.)
+            if (name.includes('study') && name.includes('10')) {
+                console.log('🔍 Найден Набор ручек Study (10 шт.):', product.name);
+                return 'https://cdn1.ozone.ru/s3/multimedia-s/6325362988.jpg';
+            }
+
+            // Товар 10: Набор ручек Executive (5 шт.)
+            if (name.includes('executive') && name.includes('5')) {
+                console.log('🔍 Найден Набор ручек Executive (5 шт.):', product.name);
+                return 'https://m4.by/images/goods/167/1151-5-nabor-ruchek-5sht-zing-flair-303912.jpg';
+            }
+
+            // Товар 11: Набор ручек Color (12 шт.)
+            if (name.includes('color') && name.includes('12')) {
+                console.log('🔍 Найден Набор ручек Color (12 шт.):', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/5251502/img_id6170469148780231845.jpeg/9hq';
+            }
+
+            // Товар 12: Набор ручек Calligraphy
+            if (name.includes('calligraphy')) {
+                console.log('🔍 Найден Набор ручек Calligraphy:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=2e1d8b56ae00adccc68635efdded2daca7ed61ab-5321834-images-thumbs&n=13';
+            }
+
+            // Товар 13: Маркер перманентный Black
+            if (name.includes('маркер перманентный') || name.includes('перманентный black') || (name.includes('маркер') && name.includes('black'))) {
+                console.log('🔍 Найден Маркер перманентный Black:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/4493022/img_id4372657623987160815.jpeg/900x1200';
+            }
+
+            // Товар 14: Маркер текстовый Pastel
+            if (name.includes('маркер текстовый') || name.includes('текстовый pastel') || (name.includes('маркер') && name.includes('pastel'))) {
+                console.log('🔍 Найден Маркер текстовый Pastel:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=92be40bcb89e71bd4992fae85e5daefdcce8c70f-5219993-images-thumbs&n=13';
+            }
+
+            // Товар 15: Набор маркеров Sketch (24 цвета)
+            if (name.includes('набор маркеров') || name.includes('(24 цвета)') || (name.includes('набор') && name.includes('цвета)'))) {
+                console.log('🔍 Найден Набор маркеров Sketch (24 цвета):', product.name);
+                return 'https://goods-photos.static1-sima-land.com/items/6221521/0/700.jpg?v=1630408531';
+            }
+
+            // Товар 16: Маркер Edding 3000
+            if (name.includes('маркер edding') || name.includes('edding 3000') || (name.includes('маркер') && name.includes('3000'))) {
+                console.log('🔍 Найден Маркер Edding 3000:', product.name);
+                return 'https://cdnru.4stand.com/large/7f/66/7f66b9ebb18bf725f0cb442608910c9307d45307.webp';
+            }
+
+            // Товар 17: Хайлайтер Stabilo Boss
+            if (name.includes('хайлайтер stabilo') || name.includes('stabilo boss') || (name.includes('хайлайтер') && name.includes('boss'))) {
+                console.log('🔍 Найден Хайлайтер Stabilo Boss:', product.name);
+                return 'https://m.media-amazon.com/images/I/61GBVkbkRgL._AC_UL800_QL65_.jpg';
+            }
+
+            // Товар 18: Маркер Copic Ciao
+            if (name.includes('маркер copic') || name.includes('copic ciao') || (name.includes('маркер') && name.includes('ciao'))) {
+                console.log('🔍 Найден Маркер Copic Ciao:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/4448884/img_id70312592144244651.jpeg/orig';
+            }
+
+            // Товар 19: Маркер Sharpie Fine
+            if (name.includes('маркер sharpie') || name.includes('sharpie fine') || (name.includes('маркер') && name.includes('fine'))) {
+                console.log('🔍 Найден Маркер Sharpie Fine:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/5222168/img_id868857402058826647.jpeg/orig';
+            }
+
+            // Товар 20: Блокнот A5 Soft
+            if (name.includes('блокнот soft') || name.includes('soft блокнот') || (name.includes('блокнот') && name.includes('soft'))) {
+                console.log('🔍 Найден Блокнот A5 Soft:', product.name);
+                return 'https://i.pinimg.com/originals/28/6e/e8/286ee8fda9378d19a04bf1e5a88a23db.png';
+            }
+
+            // Товар 21: Блокнот A5 Dot
+            if (name.includes('блокнот dot') || name.includes('dot блокнот') || (name.includes('блокнот') && name.includes('dot'))) {
+                console.log('🔍 Найден Блокнот A5 Dot:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=080fe1fbadddba29f42ee54d6b884827_l-4441308-images-thumbs&n=13';
+            }
+
+            // Товар 22: Блокнот A5 Grid
+            if (name.includes('блокнот grid') || name.includes('grid блокнот') || (name.includes('блокнот') && name.includes('grid'))) {
+                console.log('🔍 Найден Блокнот A5 Grid:', product.name);
+                return 'https://ajg.im/img/produtos/3/Caderno-A5-Plastico-21109-1729106992.jpg';
+            }
+
+            // Товар 23: Тетрадь Moleskine Classic
+            if (name.includes('тетрадь moleskine') || name.includes('moleskine classic') || (name.includes('тетрадь') && name.includes('classic'))) {
+                console.log('🔍 Найден Тетрадь Moleskine Classic:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/10096780/2a00000195cb2d4c9952ce887c0079e22a74/orig';
+            }
+
+            // Товар 24: Блокнот Leuchtturm1917
+            if (name.includes('блокнот leuchtturm1917') || name.includes('leuchtturm1917 блокнот') || (name.includes('блокнот') && name.includes('leuchtturm1917'))) {
+                console.log('🔍 Найден Блокнот Leuchtturm1917:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=e2b20052b56f6efcf294e88320273ed5bc23074a-16485021-images-thumbs&n=13';
+            }
+
+            // Товар 25: Блокнот Rhodia A5
+            if (name.includes('блокнот rhodia') || name.includes('rhodia блокнот') || (name.includes('блокнот') && name.includes('rhodia'))) {
+                console.log('🔍 Найден Блокнот Rhodia A5:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=5add39e447572b733aa1f726f5bee8db4e962991-10696481-images-thumbs&n=13';
+            }
+
+            // Товар 26: Блокнот Field Notes
+            if (name.includes('блокнот field') || name.includes('field notes') || (name.includes('блокнот') && name.includes('notes'))) {
+                console.log('🔍 Найден Блокнот Field Notes:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=a2bca99a80595caeb31c02c8870485c2e7ddfed8-5427455-images-thumbs&n=13';
+            }
+
+            // Товар 27: Блокнот Midori MD
+            if (name.includes('блокнот midori') || name.includes('midori блокнот') || (name.includes('блокнот') && name.includes('midori'))) {
+                console.log('🔍 Найден Блокнот Midori MD:', product.name);
+                return 'https://m.media-amazon.com/images/I/41VO1aug1rL.jpg';
+            }
+
+            // Товар 28: Ежедневник A5 2025
+            if (name.includes('ежедневник 2025') || name.includes('2025 ежедневник') || (name.includes('ежедневник') && name.includes('2025'))) {
+                console.log('🔍 Найден Ежедневник A5 2025:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=6ccd2c44710d12f65e2871f544260def2c773170-9182408-images-thumbs&n=13';
+            }
+
+            // Товар 29: Ежедневник A6 Pocket
+            if (name.includes('ежедневник pocket') || name.includes('pocket ежедневник') || (name.includes('ежедневник') && name.includes('pocket'))) {
+                console.log('🔍 Найден Ежедневник A6 Pocket:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=194f14070da30db879febeefa793136ebee6f5c2-5351088-images-thumbs&n=13';
+            }
+
+            // Товар 30: Планировщик Bullet Journal
+            if (name.includes('планировщик bullet') || name.includes('bullet journal') || (name.includes('планировщик') && name.includes('journal'))) {
+                console.log('🔍 Найден Планировщик Bullet Journal:', product.name);
+                return 'https://img.freepik.com/premium-vector/minimalist-planners-daily-weekly-monthly-planner-template-bullet-journal_116494-25.jpg?size=626&ext=jpg';
+            }
+
+            // Товар 31: Ежедневник Hobonichi
+            if (name.includes('ежедневник hobonichi') || name.includes('hobonichi ежедневник') || (name.includes('ежедневник') && name.includes('hobonichi'))) {
+                console.log('🔍 Найден Ежедневник Hobonichi:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=576d248dc151d51be86688e4b7657783_l-5301271-images-thumbs&n=13';
+            }
+
+            // Товар 32: Планировщик Passion Planner
+            if (name.includes('планировщик passion') || name.includes('passion planner') || (name.includes('планировщик') && name.includes('planner'))) {
+                console.log('🔍 Найден Планировщик Passion Planner:', product.name);
+                return 'https://m.media-amazon.com/images/S/aplus-seller-content-images-us-east-1/ATVPDKIKX0DER/A2BCL2T972T9RC/90df0010-3b54-4f5d-81d3-1be3a77f7ab5._CR0,0,2399,1484_PT0_SX970__.jpg';
+            }
+
+            // Товар 33: Альбом для рисования A4
+            if (name.includes('рисования') && name.includes('a4')) {
+                console.log('🔍 Найден Альбом для рисования A4:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=5efac842dc6e2e467c32c0f895710e2f_l-10240716-images-thumbs&n=13';
+            }
+
+            // Товар 34: Альбом для акварели A4
+            if (name.includes('акварели') && name.includes('a4')) {
+                console.log('🔍 Найден Альбом для акварели A4:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=9b7bb08f0ffb472b2846d77d9c874b4224f03518-12512933-images-thumbs&n=13';
+            }
+
+            // Товар 35: Альбом для скетчинга A5
+            if (name.includes('скетчинга') && name.includes('a5')) {
+                console.log('🔍 Найден Альбом для скетчинга A5:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=911d4050525b1ed963ad40396f7b38e23e1d3629-10752210-images-thumbs&n=13';
+            }
+
+            // Товар 36: Альбом Canson XL
+            if (name.includes('альбом canson') || name.includes('canson альбом') || (name.includes('альбом') && name.includes('canson'))) {
+                console.log('🔍 Найден Альбом Canson XL:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=5c3172b2b9b11377b34cf7fe482a7bd41264615f-3139572-images-thumbs&n=13';
+            }
+
+            // Товар 37: Альбом Strathmore 400
+            if (name.includes('альбом strathmore') || name.includes('strathmore 400') || (name.includes('альбом') && name.includes('400'))) {
+                console.log('🔍 Найден Альбом Strathmore 400:', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=8b3f37d00a32f563c4ca10745a9c0c20887ca7ff-5339933-images-thumbs&n=13';
+            }
+
+            // Товар 38: Карандаши цветные (36 шт.)
+            if (name.includes('цветные') && name.includes('36')) {
+                console.log('🔍 Найден Карандаши цветные (36 шт.):', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=540b2941c9cd04c391f4a0bdeb31c1ff9348b34b-12149948-images-thumbs&n=13';
+            }
+
+            // Товар 39: Карандаши Faber-Castell (24 шт.)
+            if (name.includes('faber-castell') && name.includes('24')) {
+                console.log('🔍 Найден Карандаши Faber-Castell (24 шт.):', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=036ea678533c4eed845fc35bfafcb5ce0e64b1f7-12901607-images-thumbs&n=13';
+            }
+
+            // Товар 40: Карандаши Prismacolor (72 шт.)
+            if (name.includes('prismacolor') && name.includes('72')) {
+                console.log('🔍 Найден Карандаши Prismacolor (72 шт.):', product.name);
+                return 'https://avatars.mds.yandex.net/i?id=5ebc3cc422ef1731c7cd4d1a6fbef1bd6223c2c4-16399644-images-thumbs&n=13';
+            }
+
+            // Товар 41: Карандаш графитовый HB
+            if (name.includes('карандаш графитовый') || name.includes('графитовый карандаш') || (name.includes('карандаш') && name.includes('графитовый'))) {
+                console.log('🔍 Найден Карандаш графитовый HB:', product.name);
+                return 'https://yastatic.net/naydex/yandex-search/wPA9m3e97/8905be0zyjuI/cCYkJX58_h_TL_gMVDmw7BHxmX_WTAuMuAy8BLrLAs-rQ57C3Ly00BSyboaKPs8qd7l3WbYemUP5VeT892p6rTRy4FF_2Vsbouq4jGRpkTnFwIi6dgnaKJ3JTUFvXpfvDZVZVcvKw0MjVWlEK4vKn0e9Y62XeErg';
+            }
+
+            // Товар 42: Карандаши акварельные (24 шт.)
+            if (name.includes('акварельные') && name.includes('24')) {
+                console.log('🔍 Найден Карандаши акварельные (24 шт.):', product.name);
+                return 'https://m4.by/images/goods/803/291805/00720c-karandashi-cvetnie-akvarelnie-24cv-color-emotion-deli-5.jpg';
+            }
+
+            // Товар 43: Карандаш механический 0.5 мм
+            if (name.includes('0.5') && name.includes('механический')) {
+                console.log('🔍 Найден Карандаш механический 0.5 мм:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/5068955/img_id6540369272872431777.jpeg/orig';
+            }
+
+            // Товар 44: Карандаш механический 0.7 мм
+            if (name.includes('0.7') && name.includes('механический')) {
+                console.log('🔍 Найден Карандаш механический 0.7 мм:', product.name);
+                return 'https://a.allegroimg.com/original/113670/bd677afe440db19f1dffc1e56a7f/Olowek-automatyczny-0-7mm-czarny-GRATIS-grafity';
+            }
+
+            // Товар 45: Набор гелевых ручек Color (12 шт.)
+            if (name.includes('color') && name.includes('12')) {
+                console.log('🔍 Найден Набор гелевых ручек Color (12 шт.):', product.name);
+                return 'https://basket-04.wbbasket.ru/vol690/part69061/69061707/images/big/1.webp';
+            }
+
+            // Товар 46: Набор гелевых ручек Metallic (8 шт.)
+            if (name.includes('metallic') && name.includes('8')) {
+                console.log('🔍 Найден Набор гелевых ручек Metallic (8 шт.):', product.name);
+                return 'https://cdn1.ozone.ru/s3/multimedia-y/6665601634.jpg';
+            }
+
+            // Товар 47: Набор гелевых ручек Pastel (10 шт.)
+            if (name.includes('pastel') && name.includes('10')) {
+                console.log('🔍 Найден Набор гелевых ручек Pastel (10 шт.):', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/5173454/img_id5968012536070662060.jpeg/orig';
+            }
+
+            // Товар 48: Набор гелевых ручек Neon (6 шт.)
+            if (name.includes('neon') && name.includes('6')) {
+                console.log('🔍 Найден Набор гелевых ручек Neon (6 шт.):', product.name);
+                return 'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-52/798/741/511/922/5/100044925448b0.jpg';
+            }
+
+            // Товар 49: Линейка металлическая 30 см
+            if (name.includes('металлическая') && name.includes('30')) {
+                console.log('🔍 Найден Линейка металлическая 30 см:', product.name);
+                return 'https://avatars.mds.yandex.net/get-marketpic/4902478/pic0021fa0b418c2ea8f2eb808f423cb32c/x332_trim';
+            }
+
+            // Товар 50: Линейка прозрачная 20 см
+            if (name.includes('прозрачная') && name.includes('20')) {
+                console.log('🔍 Найден Линейка прозрачная 20 см:', product.name);
+                return 'https://www.biuros.com/products/20191223-133839-7424941894.jpg';
+            }
+
+            // Товар 51: Транспортир 180°
+            if (name.includes('транспортир') && name.includes('180')) {
+                console.log('🔍 Найден Транспортир 180°:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/4932805/img_id6178166252275650425.jpeg/orig';
+            }
+
+            // Товар 52: Циркуль металлический
+            if (name.includes('циркуль') && name.includes('металлический')) {
+                console.log('🔍 Найден Циркуль металлический:', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258U_4P/ziaGfqRngaLh4l4ojDW1MvGCXg_3J54ehSQ3XE9TDIyVaHXNf0jiM4TSK0vKv1xxo9e1fvjcdW4Sg8OjdkrkCtsmlzLiIZj-s6RCfIQ2sDDs3x0e632aQ59ma1NbDACEkGwd8Ao9xgqot1VouskdcfiB5jDgnDEAf5eiskcXoCXhAZpKg2HdjMD5PRebKJQu5utSKclwg22rLGdYZFs47cAOJOENHeUlkr9dTrrIAFXCjNcrj6EtMGz6o4JaC5Qv6h-Xa7pDy4DR2ioyjC-9Nv7vWCnkYr51qxp4XFtWJNHHOjfFEQb0GKmvfWS38DJq-bXRIYKoMz5t46SLeBe8AsAUpFCHV8mezPUHIooogDHaw3EQxEy4Zogmc39Tfx_D-A467hkJzyGWi1FVg8gLXeSQyQeJrCgla8OjoVcXkw_yD5xbuFzrqvXWFyW6LYUd-9Z6BeVlg3OdFH9VQEYc0uQcJ8UKJOc6tIZda6fSDWHwgfYpnLoKDnffvaNHKqMi9w-6da5O6IHTwSYUmimnPt7fRgXgSqZmvyVudEZDFunsCyrDKDHIBKWKRUmB_SdTzL_NKramDDti2q-wUjinAvIMlEaRXuuKzcYIOIkRnBbc7n8m1luBRIgjfEZ9XwPoyCoa1QcI5QKqnFtHi9Q2Sv2WzR6-pwU0TvCll1w9ujn7EJVJtULmrNfUAR2qPbMzw8lqBdNrg1KEEFhsbkANzswrL-ESNeovrZxJXpLCL2X1lvYshqkSDljfhIZcPZg72x23XbhGyp_vxBgIrBmHA_Phah7yWrhVlAp4b2FQNs_iKSfIDSzVAbOCWGuR5AZm8JDOCaudNBJ09pKIby-wLc4Kim-sQuefzMEiG6AUuxjQ1HkB81GYUpQiZVhydADJzgYgzDsp3jCIg31kp_AQStWT2RiYoC0cTcSDtEMUphj2LrR2gnf3rPblFzuEKpkt7P5bM8JkrVOpBmxYYXg';
+            }
+
+            // Товар 53: Ластик Pentel
+            if (name.includes('pentel') && name.includes('ластик')) {
+                console.log('🔍 Найден Ластик Pentel:', product.name);
+                return 'https://738484.ru/d/zeh-03.jpg';
+            }
+
+            // Товар 54: Точилка для карандашей
+            if (name.includes('точилка') && name.includes('карандашей')) {
+                console.log('🔍 Найден Точилка для карандашей:', product.name);
+                return 'https://img.mweb.com.tw/thumb/258/500x500/01-product/Pencil-Sharpener/032ya-a.jpg';
+            }
+
+            // Товар 55: Клей-карандаш 25 г
+            if (name.includes('клей-карандаш') && name.includes('25')) {
+                console.log('🔍 Найден Клей-карандаш 25 г:', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258FKUa/yDTIMPl12a7x8AIiwza1JKfVUQTnbY8PgiV-EUxSGpTMLyvMZEm2ZtTRKR3c7gl3yYzncPzecG8Vgs_wIkXpXY11wyngIoGl9fQXfoIpuDDW83ErwVe4c6UHQ3BSVgDdxCds3T4j23WykE5Egsw9Vv6w1j28rQE3bfGBtFAFvinaBLhnoljoo-j3Pz27D7AG7-J2C-J4gnutIUNxT3I60PU8A-AiE8gYs6BTWLbGNkjzke8fqqEQFHrUlrN5HaYt0ASVdZ9A6JX38wAwpzO3MvzGahDzRblrjQtOSX1NAenzNg7pPB3JAbSpcUSe6xxDwKrSC6i_DTtXxJC0RBqCAfk9tVuZU8up_NAIGZwhiAbx7WIfyHyGT6E6enFEehzM6xAF7ScGzyGzg15EseYuWPih7QCKizQYR8OgsUE2oxTyKJRyokbem_D6GyCfMJQU7MZxMuBnpEKtBF5rQkYI3dQ-EPsFLdM9rYFOeYHLK1jej_sSiaASD3bygLVjFYYdziiRXYdT_Krh2x0llQucA-HAUyfPWbVOtSZ4RGh0NOPvPTrnAxjGOL-SW2uF6y5b8LzEAoqrDAhY3pONWD2ELPcLp0ygccus8-kmOYAKuCLR1nwe4l-6WKsocm15bQXK7wky5goX6hK1tVVumNAnR_Gz4B6HjRYaUfuwoXcYmwviKKJ8omfHn9fDNSaOLLwj5OJpI-1yvVi5MWt7YEINytQ7CugdLfw9lKRVbrrSB0rTp-0aq74uCkjutoVDKKsj4jODTZlg14X3wDo2tS2SIezLdjrSXKNGqARoXUlBCMzsHifcOzHQFIKqZnySxBJd7pX5Hoa-DQ9y_bqIfzOIFvEsgka5Z9et6vcpEoMrvg7rz0A_2W2YR40LXklfbS3P-w8U4SI_6SaTlkpHhPEqedCM1yuWjTcrR92etl0GtDzTHrNzjGbqieP3Oh6_CpcP3O1BMtN5kFCAFWhvYGE';
+            }
+
+            // Товар 56: Клей ПВА 50 мл
+            if (name.includes('пва') && name.includes('50')) {
+                console.log('🔍 Найден Клей ПВА 50 мл:', product.name);
+                return 'https://www.deloks.ru/upload/iblock/0ce/r06mc3i32hj25ljzmplizhn4tlksjg1z/kley_roller_pva_berlingo_50ml_1_full.jpg';
+            }
+
+            // Товар 57: Органайзер для стола
+            if (name.includes('органайзер') && name.includes('стола')) {
+                console.log('🔍 Найден Органайзер для стола:', product.name);
+                return 'https://ir.ozone.ru/s3/multimedia-6/c1000/6661793850.jpg';
+            }
+
+            // Товар 58: Подставка для ручек
+            if (name.includes('ручек') && name.includes('подставка')) {
+                console.log('🔍 Найден Подставка для ручек:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/4578218/2a0000018aef7f5527b1c2b67b613c62a1cd/orig';
+            }
+
+            // Товар 59: Подставка для карандашей
+            if (name.includes('карандашей') && name.includes('подставка')) {
+                console.log('🔍 Найден Подставка для карандашей:', product.name);
+                return 'https://sc04.alicdn.com/kf/HTB1ohKgfyAKL1JjSZFo761gCFXax.png';
+            }
+
+            // Товар 60: Лоток для бумаг A4
+            if (name.includes('лоток') && name.includes('бумаг')) {
+                console.log('🔍 Найден Лоток для бумаг A4:', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258FKUa/yDTIMPl12a7x8AIiwza1JKfVUQTnbY8PgiV-EUxSGpTMLyvMZE21Yd_WJBnBqFZxptWzeP7ffWoUhcHzIR2wX44myyzgJMn3vKcUNI5t5WW7yh8F8WGQfrMBS3x0eDzw5hYM1ioS4DCfy25arNhEReO36DmFtwI3deKCtVY5uSP-MYFar3vorcbbCCWhHL067-NcPNdppkeiBmtfW0I0-MAWDcsOKO0BhKRTRpzLKUTTqvQNj7wcOlTboKNaKJo02yaGc7dj7KfG9hoYuRyLJevcUSDrbpJUhhpwTmZ5JNjqGzX5MRPUB46pWliSyjBD2ojoJaKWFwlv5rShRDW1GcsggU6wR8CO_9Y0Hqo_ty7I1Hgb-VGmWa0Sf3VfRgD02y8NwAYO8R-ool5DicwQRPCn6AqvpAwxZNm_g3AMlgnMEIRLnGbVher3HSW_KoUi4sdBGOhNtESGAVJdRGQN-OULF8Y6GuAghrdIYaLQDFryt9U6gqEMF0rPrYBbKoE4_TCAab9D3Lnq8jIAqgi0M8PBRBLTRaNJgCNHcnp1AeDHLTjsCCbeG4WdVGeXxQlI4aLHPqKkDzl58L2DUDSGFtEjuFKXQe2AycQjJ4g_siHx-lgH0mGCeZYMfl98ehf-yScR_REX9xuxlVVumOkjQsaswiOZrRM4dtShjnYulB_0AJR9sl7KlerBEyWeM4EF2-lHCfRlg0yiGUNQUX0X7NA-B-Q-H_cgg61beaL_DGPXrMIBm40eGmLZpaJFFoQG4QawSYJu4pXx4CIemSObJdjmVzL1S4FEiwZab39jCf3lPSHNPRrxGKaAb1--0yV12Z_QKY2YCSdQzaGPRTWBPPIKvXWZTdeG7uEpPp4jszjv9XME82euQ48wX2ROWAjY6gs12xE_8g-3s1JGsOoXZOWz6z-4oC0ZSeOUn3YPpQnSLoNXrHH9pNzQHAufHpcx7-Z_ONJOr3StMVJuWlA';
+            }
+
+            // Товар 61: Подставка для книг
+            if (name.includes('книг') && name.includes('подставка')) {
+                console.log('🔍 Найден Подставка для книг:', product.name);
+                return 'https://yastatic.net/naydex/yandex-search/wPA9m4e53/8905be0zyjuI/cCYkJX58_h_TL_gMVDmw7BHxmX_WTAuMuAycdP_rB4obY7snnNlU5RGSTub6Tl8fZ6zSDON-rENpQIT59w8f6FRi4BEvqQsr4ov8zCSp8RigJRl7p4krPcm5jJXaC6cvK1VYtcv7EkLy5YmkWPpKb-estshXCurlk';
+            }
+
+            // Товар 62: Папка-скоросшиватель A4
+            if (name.includes('папка-скоросшиватель') || name.includes('папка-скор') || (name.includes('папка-скор') && name.includes('осшиватель'))) {
+                console.log('🔍 Найден Папка-скоросшиватель A4:', product.name);
+                return 'https://elefant.by/img_products/full_955761145_a.jpg';
+            }
+
+            // Товар 63: Папка-файл A4 (10 шт.)
+            if (name.includes('папка-файл (10') || name.includes('(10 шт.)') || (name.includes('папка-файл') && name.includes('шт.)'))) {
+                console.log('🔍 Найден Папка-файл A4 (10 шт.):', product.name);
+                return 'https://kanci.by/img_products/full_____77.jpg';
+            }
+
+            // Товар 64: Папка-конверт A4
+            if (name.includes('папка-конверт') || name.includes('папка-к') || (name.includes('папка-к') && name.includes('онверт'))) {
+                console.log('🔍 Найден Папка-конверт A4:', product.name);
+                return 'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-53/517/634/012/623/21/100045991142b0.jpg';
+            }
+
+            // Товар 65: Папка на кольцах A4
+            if (name.includes('папка кольцах') || name.includes('кольцах папка') || (name.includes('папка') && name.includes('кольцах'))) {
+                console.log('🔍 Найден Папка на кольцах A4:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/7501941/img_id8425557353095349130.jpeg/orig';
+            }
+
+            // Товар 66: Папка-портфель A4
+            if (name.includes('папка-портфель') || name.includes('папка-п') || (name.includes('папка-п') && name.includes('ортфель'))) {
+                console.log('🔍 Найден Папка-портфель A4:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/5268943/img_id755756208833207992.jpeg/orig';
+            }
+
+            // Товар 67: Степлер Compact
+            if (name.includes('степлер compact') || name.includes('compact степлер') || (name.includes('степлер') && name.includes('compact'))) {
+                console.log('🔍 Найден Степлер Compact:', product.name);
+                return 'https://cdn.vseinstrumenti.ru/images/goods/tovary-dlya-ofisa-i-doma/snabzhenie-i-osnaschenie-ofisa/15927382/1200x800/178963450.jpg';
+            }
+
+            // Товар 68: Степлер Heavy Duty
+            if (name.includes('степлер heavy') || name.includes('heavy duty') || (name.includes('степлер') && name.includes('duty'))) {
+                console.log('🔍 Найден Степлер Heavy Duty:', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258FKUa/yDTIMPl12a7x8AIiwza1JKfVUQTnbY8PgiV-EUxSGpTMLyvMZEizbNPRJRvctQUgptWzeP_Xdz0X1c71IETnXNlyy3mwI5arsaBFYog96WK_g18Y6m-ofq0BSGFkZSf-6BE7ziUY4S3Jl2lwrKcxZcSO8gOXqCwKdcKFhFAUnCjONLdmuVPNjM_pBB2qN7wxxsBmPuJZkW-qIWtOXm0v2OgQJuofFdA2pqp1QL_KMFXZksYJnLYhK0zgk4hBN4sN2TOefqFXx4zi-zkFqgGjNfnNegLlbYJLtjp6c2V9D_LlKBTVJCzWPKuja06-0zdc-47uJLa9EhBx9JGWXBimHd80o3mFe-61wtU_Fok9qBbx5EEQ2lmPYL41QUpaWSPD0RAt4jkJzhqgp3BVuPMwdtSOwSmEpiobTv-zomU7thrvMaZVpG7loOP8BAOcD6Q84t1CAcZLkkutGGlReFQv_fUKK94tGPE0tbFSfqTvLnTEs_EEgaYMNVjtsIlDLIcrzzWEdoFn2aDm0yEWvj61HeTYSDrOXJ9Njw1Gb2lYN9_TJQHsESbKN5-tVEux6jxn0aH1JISlIgZn_bOCXSupB9wNv16DVuCD0MIGNIk4py_fxF076n2vW6A0a2lmTinR2QwQ9SAPygOXrF1EncA2QN-k6B-NuSMJQ-G-pEc5oCL_IZB7nHH1oNXyBCKFC4MFzNtTHe58mm-1CWREYU47yMAaCdooD_Exr6JKfovvF1HfpModrbQBHU7lkpd_Kbk3-QWkS6xZ9bv0wz8llRGjBsPLaBzAfpJGqhBban9QKv3DPCDZLQnJFIKWbGKnxgFf7LbiC7ijPC9a4b-XXCyDJPUImFCPbOak9cgfIpU5vjHQ714a7FGVQpwVUFtEUQ_y9Sg29QgK3gWxq3VsnvQQY8CN9D6AhwI2dNSvpGYItgTRNrpls0bElsT9KiOoHbcxw-NiO8VQomCdGFpPTEY';
+            }
+
+            // Товар 69: Скобы для степлера №10
+            if (name.includes('№10') && name.includes('скобы')) {
+                console.log('🔍 Найден Скобы для степлера №10:', product.name);
+                return 'https://bitrix-production-static-storage.storage.yandexcloud.net/iblock/a5a/a5a425c4d06e8c16f30c8f2d19b51c5c.jpg';
+            }
+
+            // Товар 70: Скобы для степлера №24/6
+            if (name.includes('№24/6') && name.includes('скобы')) {
+                console.log('🔍 Найден Скобы для степлера №24/6:', product.name);
+                return 'https://main-cdn.sbermegamarket.ru/hlr-system/-55/921/479/412/623/9/100045990635b0.jpg';
+            }
+
+            // Товар 71: Антистеплер
+            if (name.includes('антистеплер') || name.includes('антист') || (name.includes('антист') && name.includes('еплер'))) {
+                console.log('🔍 Найден Антистеплер:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/4579830/img_id1383611422190976325.jpeg/orig';
+            }
+
+            // Товар 72: Скотч канцелярский (2 шт.)
+            if (name.includes('скотч канцелярский') || name.includes('канцелярский шт.)') || (name.includes('скотч') && name.includes('шт.)'))) {
+                console.log('🔍 Найден Скотч канцелярский (2 шт.):', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258FKUa/yDTIMPl12a7x8AIiwza1JKfVUQTnbY8PgiV-EUxSGpTMLyvMZEm2ZNTSKRfctQUgptWzeP_XcD0SgcCiJB7lD41-xifmcsr6vPNEZY5otWLrgwkC8leoYK0CVXF5finw7yYjwS8Z_HuVkENw09IRQv2UyBGIhhEKVcW0gn0xlxjLAotwkXbshf3lPBaBNrcY5fpkC9JuuWeNIXpLcXYP8O47B_siKOcUqIxzY77TIV_hoMIaloswM3fTuJNeJrIPzCuTaJV87Kjv2CQWtymzJ-jmWAzmfZ17ljBHcGFWJf3WCTjAGy7tGaGSfWKn1Ch9_YjvMJ24Cw5j0aaOcQuiCcsWlEy5VdWIwd43NYsikC_B3Uoz0nC2c5kLfk9FehTJ7jAP3T42yxKliWZkh9MCUv2n4gKGgAAxaPOSt1IbpTnOE7htrF7AqejlIiC5Lro8-N5bL8BtnWC0I2VtSHYq7fQ2M8kvCeUHs6tNeJvNAELAl88HhqYuJ3rwuZFFKpQZyjGbSKViwKzHwDcCiD-bOv3UYCfXYJtCoQxbfERuCMvbHAH1ETLmLa-teG2e3xNX0pPvAoWIHRhq87KPQgS4CvIKs0qUW-Oa1ucVNY4tqQHhwWED9lCNbZghXXNScAbB8g0YxDgy0iWupHdBtNU0WdeO1AuZiRI8dv6UlVANnSneJZZVs07An-blAzm9CYMS_s9HB_dluXilLnB0UmIf2OQUN8w4CeAdoLNNV5v0JVnXrNYrlKsGMXLSp61AFIgv-hGmZZtO277X3gQppymAHe70Rin1bZBnvBFeakxzKtvCPTTJPjHFMJSVUXuy4itqxYTAPoOWNCV2_6eORS6bI_ctvUauXcS_3P4DKY80tw7KwkAF2mqUUbkab1FNViXt1isY7D0m1AOpjF9CgPMXRv6S9QanqC0LQ--UtGEbuwfJD4h6hH_2junLAhSrPbcdxv5hLNtdtlC0EHtZWls';
+            }
+
+            // Товар 73: Скотч двусторонний
+            if (name.includes('скотч двусторонний') || name.includes('двусторонний скотч') || (name.includes('скотч') && name.includes('двусторонний'))) {
+                console.log('🔍 Найден Скотч двусторонний:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/12301908/2a0000018da990de94644facd5c37d160f63/orig';
+            }
+
+            // Товар 74: Скотч малярный
+            if (name.includes('скотч малярный') || name.includes('малярный скотч') || (name.includes('скотч') && name.includes('малярный'))) {
+                console.log('🔍 Найден Скотч малярный:', product.name);
+                return 'https://www.oboisila.ru/upload/iblock/bc6/99lpwbd8yu538ciiephy468fk9258a7p.jpg';
+            }
+
+            // Товар 75: Скотч упаковочный
+            if (name.includes('скотч упаковочный') || name.includes('упаковочный скотч') || (name.includes('скотч') && name.includes('упаковочный'))) {
+                console.log('🔍 Найден Скотч упаковочный:', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258U_4P/ziaGfqRngaLh4l4ojDW1MvGCXg_3J54ehSQ3XRoPXY6YPHqWLR3gNNXUeU7A4lMloYThevbfJ2gY0pGkLUu3Vt0mwDLjIJj5tqBDfIQ2sDDs3x0e632aQ59ma1NbDACEkGwd8Ao9xgqot1VouskdcfiB5jDgnDEAf5eiskcXoCXhAZpKg2HdjMD5PRebKJQu5utSKclwg22rLGdYZFs47cAOJOENHeUlkr9dTrrIAFXCjNcrj6EtMGz6o4JaC5Qv6h-Xa7pDy4DR2ioyjC-9Nv7vWCnkYr51qxp4XFtWJNHHOjfFEQb0GKmvfWS38DJq-bXRIYKoMz5t46SLeBe8AsAUpFCHV8mezPUHIooogDHaw3EQxEy4Zogmc39Tfx_D-A467hkJzyGWi1FVg8gLXeSQyQeJrCgla8OjoVcXkw_yD5xbuFzrqvXWFyW6LYUd-9Z6BeVlg3OdFH9VQEYc0uQcJ8UKJOc6tIZda6fSDWHwgfYpnLoKDnffvaNHKqMi9w-6da5O6IHTwSYUmimnPt7fRgXgSqZmvyVudEZDFunsCyrDKDHIBKWKRUmB_SdTzL_NKramDDti2q-wUjinAvIMlEaRXuuKzcYIOIkRnBbc7n8m1luBRIgjfEZ9XwPoyCoa1QcI5QKqnFtHi9Q2Sv2WzR6-pwU0TvCll1w9ujn7EJVJtULmrNfUAR2qPbMzw8lqBdNrg1KEEFhsbkANzswrL-ESNeovrZxJXpLCL2X1lvYshqkSDljfhIZcPZg72x23XbhGyp_vxBgIrBmHA_Phah7yWrhVlAp4b2FQNs_iKSfIDSzVAbOCWGuR5AZm8JDOCaudNBJ09pKIby-wLc4Kim-sQuefzMEiG6AUuxjQ1HkB81GYUpQiZVhydADJzgYgzDsp3jCIg31kp_AQStWT2RiYoC0cTcSDtEMUphj2LrR2gnf3rPblFzuEKpkt7P5bM8JkrVOpBmxYYXg';
+            }
+
+            // Товар 76: Клейкая лента декоративная
+            if (name.includes('клейкая лента') || name.includes('лента декоративная') || (name.includes('клейкая') && name.includes('декоративная'))) {
+                console.log('🔍 Найден Клейкая лента декоративная:', product.name);
+                return 'https://yastatic.net/naydex/yandex-search/wPA9m4e53/8905be0zyjuI/cCYkJX58_h_TL_gMVDmw7BHxmX_WTAuMuAnMEd-Od-9uQ4si3KlkICT3TtOvS7oqQqnC2dM7mXMcRZHM9y9KqDFC4BFfuVtb0lt8zCSp8RigJRl7p4krPcm5jJXaC6cvK1VYtcv7EkLy5YmkWPpKb-estshXCurlk';
+            }
+
+            // Товар 77: Корректор-лента
+            if (name.includes('лента') && name.includes('корректор')) {
+                console.log('🔍 Найден Корректор-лента:', product.name);
+                return 'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-16/848/354/501/217/940/100070355144b2.jpg';
+            }
+
+            // Товар 78: Корректор-ручка
+            if (name.includes('ручка') && name.includes('корректор')) {
+                console.log('🔍 Найден Корректор-ручка:', product.name);
+                return 'https://main-cdn.sbermegamarket.ru/big2/hlr-system/-35/134/481/311/171/41/100060788907b3.jpg';
+            }
+
+            // Товар 79: Корректор-карандаш
+            if (name.includes('карандаш') && name.includes('корректор')) {
+                console.log('🔍 Найден Корректор-карандаш:', product.name);
+                return 'https://ke-images.servicecdn.ru/cb6os4k1acn4fopc4c30/t_product_high.jpg';
+            }
+
+            // Товар 80: Маркер для досок
+            if (name.includes('досок') && name.includes('маркер')) {
+                console.log('🔍 Найден Маркер для досок:', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/1911047/img_id7216487406474802016.jpeg/orig';
+            }
+
+            // Товар 81: Маркер для ткани
+            if (name.includes('ткани') && name.includes('маркер')) {
+                console.log('🔍 Найден Маркер для ткани:', product.name);
+                return 'https://yandex-images.clstorage.net/URk96u390/b74258FKUa/yDTIMPl12a7x8AIiwza1JKfVUQTnbY8PgiV-EUxSGpTMLyvMZEu9Yt7dKh3c7gl3yYzne_vWdW4ZhcH1J0npW4x2xirkIYGl9fQXfoIpuDDW83ErwVe4c6UHQ3BSVgDdxCds3T4j23WykE5Egsw9Vv6w1j28rQE3bfGBtFAFvinaBLhnoljoo-j3Pz27D7AG7-J2C-J4gnutIUNxT3I60PU8A-AiE8gYs6BTWLbGNkjzke8fqqEQFHrUlrN5HaYt0ASVdZ9A6JX38wAwpzO3MvzGahDzRblrjQtOSX1NAenzNg7pPB3JAbSpcUSe6xxDwKrSC6i_DTtXxJC0RBqCAfk9tVuZU8up_NAIGZwhiAbx7WIfyHyGT6E6enFEehzM6xAF7ScGzyGzg15EseYuWPih7QCKizQYR8OgsUE2oxTyKJRyokbem_D6GyCfMJQU7MZxMuBnpEKtBF5rQkYI3dQ-EPsFLdM9rYFOeYHLK1jej_sSiaASD3bygLVjFYYdziiRXYdT_Krh2x0llQucA-HAUyfPWbVOtSZ4RGh0NOPvPTrnAxjGOL-SW2uF6y5b8LzEAoqrDAhY3pONWD2ELPcLp0ygccus8-kmOYAKuCLR1nwe4l-6WKsocm15bQXK7wky5goX6hK1tVVumNAnR_Gz4B6HjRYaUfuwoXcYmwviKKJ8omfHn9fDNSaOLLwj5OJpI-1yvVi5MWt7YEINytQ7CugdLfw9lKRVbrrSB0rTp-0aq74uCkjutoVDKKsj4jODTZlg14X3wDo2tS2SIezLdjrSXKNGqARoXUlBCMzsHifcOzHQFIKqZnySxBJd7pX5Hoa-DQ9y_bqIfzOIFvEsgka5Z9et6vcpEoMrvg7rz0A_2W2YR40LXklfbS3P-w8U4SI_6SaTlkpHhPEqedCM1yuWjTcrR92etl0GtDzTHrNzjGbqieP3Oh6_CpcP3O1BMtN5kFCAFWhvYGE';
+            }
+
+            // Товар 82: Набор "Студент"
+            if (name.includes('студент') && name.includes('набор')) {
+                console.log('🔍 Найден Набор "Студент":', product.name);
+                return 'https://goods-photos.static1-sima-land.com/items/2024135/0/1600.jpg?v=0';
+            }
+
+            // Товар 83: Набор "Офис"
+            if (name.includes('офис') && name.includes('набор')) {
+                console.log('🔍 Найден Набор "Офис":', product.name);
+                return 'https://o-manager.ru/foto/0501-0156.jpg';
+            }
+
+            // Товар 84: Набор "Художник"
+            if (name.includes('художник') && name.includes('набор')) {
+                console.log('🔍 Найден Набор "Художник":', product.name);
+                return 'https://avatars.mds.yandex.net/get-mpic/4076910/img_id2424402648305677742.jpeg/orig';
+            }
+
+            // Товар 85: Набор "Планировщик"
+            if (name.includes('планировщик') && name.includes('набор')) {
+                console.log('🔍 Найден Набор "Планировщик":', product.name);
+                return 'https://a.allegroimg.com/original/119b9c/89ff68634d38b7f36e6af8fa0756/PLANER-BUDZETOWY-SEGREGATOR-BUDZETU-NOTES-ZESTAW-A6-34-ELEMENTOW';
+            }
+
+            // Товар 86: Набор "Каллиграфия"
+            if (name.includes('каллиграфия') && name.includes('набор')) {
+                console.log('🔍 Найден Набор "Каллиграфия":', product.name);
+                return 'https://basket-02.wbbasket.ru/vol254/part25492/25492325/images/big/1.webp';
+            }
+
+
+                     // По умолчанию для всех остальных товаров
+            console.log('📄 Товар по умолчанию:', product.name);
+            return 'https://via.placeholder.com/400x400/f0f0f0/999999?text=Изображение+товара';
+        }
+
+        // Отображение товаров
+        function displayProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const pageProducts = filteredProducts.slice(startIndex, endIndex);
+            
+            console.log('Отображаем товары:', pageProducts.length);
+            console.log('Первый товар для отображения:', pageProducts[0]);
+
+            if (pageProducts.length === 0) {
+                grid.innerHTML = '<div class="no-products">Товары не найдены</div>';
+                return;
+            }
+
+            grid.innerHTML = pageProducts.map(product => {
+                const rating = getProductRating(product);
+                const ratingStars = generateStarRating(rating);
+                
+                const productImage = getProductIcon(product);
+                const isRealImage = productImage.startsWith('http');
+                
+                console.log('🖼️ Товар:', product.name, '| Изображение:', productImage, '| Реальное фото:', isRealImage);
+                
+                return `
+                <div class="product-card">
+                        <div class="product-image">
+                            <img src="${productImage}" alt="${product.name}" onload="console.log('✅ Изображение загружено:', this.src);" onerror="console.log('❌ Ошибка загрузки:', this.src);">
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                            <div class="product-rating">
+                                ${ratingStars}
+                                <span class="rating-text">(${rating}/5)</span>
+                            </div>
+                        <p class="product-description">${product.description || 'Описание отсутствует'}</p>
+                        <p class="price">${product.price}</p>
+                        <button class="btn-add" onclick="addToCart(${product.id})">Добавить в корзину</button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+        
+        // Генерация рейтинга для товара
+        function getProductRating(product) {
+            // Создаем стабильный рейтинг на основе ID товара
+            const seed = product.id * 7 + product.name.length * 3;
+            const random = (Math.sin(seed) + 1) / 2; // Генерируем число от 0 до 1
+            
+            // Распределяем рейтинги: 20% - 5 звезд, 30% - 4 звезды, 25% - 3 звезды, 15% - 2 звезды, 10% - 1 звезда
+            if (random < 0.2) return 5;
+            else if (random < 0.5) return 4;
+            else if (random < 0.75) return 3;
+            else if (random < 0.9) return 2;
+            else return 1;
+        }
+        
+        // Генерация звездочек рейтинга
+        function generateStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            let stars = '';
+            
+            // Полные звезды
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<span class="star full">⭐</span>';
+            }
+            
+            // Половина звезды
+            if (hasHalfStar) {
+                stars += '<span class="star half">⭐</span>';
+            }
+            
+            // Пустые звезды
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<span class="star empty">☆</span>';
+            }
+            
+            return stars;
+        }
+
+        // Обновление счетчика результатов
+        function updateResultsCount() {
+            const countElement = document.getElementById('resultsCount');
+            if (countElement) {
+                countElement.textContent = filteredProducts.length;
+            }
+        }
+        
+        // Очистка фильтров
+        function clearFilters() {
+            // Очищаем поля поиска
+            document.getElementById('mainSearch').value = '';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '50000';
+            document.getElementById('priceRange').value = '50000';
+            
+            // Сбрасываем чекбоксы категорий
+            document.querySelectorAll('#categoryFilters input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Сбрасываем радиокнопки ценового диапазона
+            document.querySelectorAll('input[name="priceRange"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Сбрасываем фильтры популярности
+            document.getElementById('popular').checked = false;
+            document.getElementById('new').checked = false;
+            document.getElementById('sale').checked = false;
+            
+            // Сбрасываем фильтры брендов
+            document.querySelectorAll('#brandFilters input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Сбрасываем фильтры рейтинга
+            document.querySelectorAll('input[name="rating"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Сбрасываем фильтры наличия
+            document.getElementById('inStock').checked = true;
+            document.getElementById('outOfStock').checked = false;
+            
+            // Сбрасываем быстрые фильтры
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            applyFilters();
+        }
+
+        // Добавление в корзину
+        async function addToCart(productId) {
+            console.log('=== Добавление в корзину ===');
+            console.log('ID товара:', productId);
+            
+            try {
+                // Получаем токен пользователя
+                const token = localStorage.getItem('userToken');
+                if (!token) {
+                    alert('Необходимо войти в систему');
+                    return;
+                }
+
+                // Декодируем токен для получения user_id
+                const tokenData = JSON.parse(atob(token));
+                const userId = tokenData.user_id;
+                
+                console.log('Данные токена:', tokenData);
+                console.log('ID пользователя:', userId);
+                
+                const requestData = {
+                    user_id: userId,
+                    product_id: productId,
+                    quantity: 1
+                };
+                
+                console.log('Данные запроса:', requestData);
+                
+                const response = await fetch('pencraft/cart_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                console.log('Статус ответа:', response.status);
+                const result = await response.json();
+                console.log('Ответ сервера:', result);
+                
+                if (result.success) {
+                    showNotification('Товар добавлен в корзину!');
+                    updateCartCount();
+                } else {
+                    console.error('Ошибка добавления в корзину:', result.error);
+                    showNotification('Ошибка: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Ошибка добавления в корзину:', error);
+                showNotification('Ошибка: ' + error.message);
+            }
+        }
+
+        // Обновление счетчика корзины
+        async function updateCartCount() {
+            try {
+                const token = localStorage.getItem('userToken');
+                if (!token) return;
+
+                const tokenData = JSON.parse(atob(token));
+                const userId = tokenData.user_id;
+                
+                const response = await fetch(`pencraft/cart_api.php?user_id=${userId}`);
+                const data = await response.json();
+                
+                console.log('Статус ответа счетчика:', response.status);
+                console.log('Данные счетчика:', data);
+                
+                if (data.success) {
+                    document.getElementById('cartCount').textContent = data.total_items || 0;
+                } else {
+                    console.error('Ошибка получения счетчика:', data.error);
+                }
+            } catch (error) {
+                console.error('Ошибка получения счетчика:', error);
+            }
+        }
+        
+        // Проверка авторизации
+        function checkAuthStatus() {
+            const token = localStorage.getItem('userToken');
+            if (token) {
+                try {
+                    const tokenData = JSON.parse(atob(token));
+                    const userName = tokenData.name || 'Пользователь';
+                    document.getElementById('userName').textContent = `Привет, ${userName}!`;
+                } catch (error) {
+                    console.error('Ошибка декодирования токена:', error);
+                }
+            }
+        }
+        
+        // Выход из системы
+        function logout() {
+            localStorage.removeItem('userToken');
+            localStorage.removeItem('userData');
+            window.location.href = 'login.html';
+        }
+
+        // Показ уведомлений
+        function showNotification(message) {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #10b981;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                font-weight: 500;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Удаляем уведомление через 3 секунды
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Показ ошибок
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #ef4444;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                font-weight: 500;
+            `;
+            errorDiv.textContent = message;
+            
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+        
+        // Сохранение состояния фильтров
+        function saveFiltersState() {
+            const filtersState = {
+                searchTerm: document.getElementById('mainSearch').value,
+                filterSearchTerm: document.getElementById('searchInput').value,
+                minPrice: document.getElementById('minPrice').value,
+                maxPrice: document.getElementById('maxPrice').value,
+                selectedCategories: Array.from(document.querySelectorAll('#categoryFilters input[type="checkbox"]:checked'))
+                    .map(checkbox => checkbox.value),
+                selectedPriceRange: document.querySelector('input[name="priceRange"]:checked')?.value,
+                isPopular: document.getElementById('popular').checked,
+                isNew: document.getElementById('new').checked,
+                isSale: document.getElementById('sale').checked,
+                selectedBrands: Array.from(document.querySelectorAll('#brandFilters input[type="checkbox"]:checked'))
+                    .map(checkbox => checkbox.value),
+                selectedRating: document.querySelector('input[name="rating"]:checked')?.value,
+                inStock: document.getElementById('inStock').checked,
+                outOfStock: document.getElementById('outOfStock').checked
+            };
+            
+            localStorage.setItem('catalogFilters', JSON.stringify(filtersState));
+        }
+        
+        // Восстановление состояния фильтров
+        function restoreFiltersState() {
+            const savedState = localStorage.getItem('catalogFilters');
+            if (!savedState) return;
+            
+            try {
+                const filtersState = JSON.parse(savedState);
+                
+                document.getElementById('mainSearch').value = filtersState.searchTerm || '';
+                document.getElementById('searchInput').value = filtersState.filterSearchTerm || '';
+                document.getElementById('minPrice').value = filtersState.minPrice || '';
+                document.getElementById('maxPrice').value = filtersState.maxPrice || '50000';
+                
+                // Восстанавливаем категории
+                filtersState.selectedCategories?.forEach(category => {
+                    const checkbox = document.querySelector(`#categoryFilters input[value="${category}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+                
+                // Восстанавливаем ценовой диапазон
+                if (filtersState.selectedPriceRange) {
+                    const radio = document.querySelector(`input[name="priceRange"][value="${filtersState.selectedPriceRange}"]`);
+                    if (radio) radio.checked = true;
+                }
+                
+                // Восстанавливаем популярность
+                document.getElementById('popular').checked = filtersState.isPopular || false;
+                document.getElementById('new').checked = filtersState.isNew || false;
+                document.getElementById('sale').checked = filtersState.isSale || false;
+                
+                // Восстанавливаем бренды
+                filtersState.selectedBrands?.forEach(brand => {
+                    const checkbox = document.querySelector(`#brandFilters input[value="${brand}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+                
+                // Восстанавливаем рейтинг
+                if (filtersState.selectedRating) {
+                    const radio = document.querySelector(`input[name="rating"][value="${filtersState.selectedRating}"]`);
+                    if (radio) radio.checked = true;
+                }
+                
+                // Восстанавливаем наличие
+                document.getElementById('inStock').checked = filtersState.inStock !== false;
+                document.getElementById('outOfStock').checked = filtersState.outOfStock || false;
+                
+            } catch (error) {
+                console.error('Ошибка восстановления фильтров:', error);
+            }
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            // Восстанавливаем фильтры после загрузки товаров
+            setTimeout(() => {
+                restoreFiltersState();
+                applyFilters();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

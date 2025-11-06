@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PenCraft - Премиальная канцелярия</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="animated-bg"></div>
+    
+    <!-- Навигация -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <span class="logo-icon">✒️</span>
+                        <span class="logo-text">PenCraft</span>
+                    </a>
+                </div>
+                
+                <nav class="nav">
+                    <a href="index.html" class="nav-link active">Главная</a>
+                    <a href="catalog.html" class="nav-link">Каталог</a>
+                    <a href="about.html" class="nav-link">О нас</a>
+                </nav>
+                
+                <div class="header-actions">
+                    <div class="auth-buttons" id="authButtons">
+                        <a href="login.html" class="btn btn-outline">Войти</a>
+                        <a href="register.html" class="btn btn-primary">Регистрация</a>
+                    </div>
+                    
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <span class="user-name" id="userName">Привет, пользователь!</span>
+                        <button class="btn btn-outline" onclick="logout()">Выйти</button>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-link">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+                </div>
+        </div>
+    </header>
+
+    <!-- Главная секция -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Премиальная канцелярия
+                        <span class="gradient-text">для творчества</span>
+                    </h1>
+                    <p class="hero-description">
+                        Откройте мир качественных письменных принадлежностей, 
+                        блокнотов и аксессуаров для работы и творчества
+                    </p>
+                    <div class="hero-actions">
+                        <a href="catalog.html" class="btn btn-primary btn-lg">
+                            Смотреть каталог
+                            <span>→</span>
+                        </a>
+                        <a href="about.html" class="btn btn-outline btn-lg">
+                            О нас
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+<img src="https://avatars.mds.yandex.net/i?id=f61a9e2605abf971cb6ca6c51e93b6bf_l-5549928-images-thumbs&n=13" alt="Описание изображения" width="600" height="400">
+                    <div class="hero-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Особенности -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-xl">
+                <h2>Почему выбирают PenCraft</h2>
+                <p class="text-lg text-gray">Качество, стиль и функциональность в каждом продукте</p>
+                    </div>
+            
+            <div class="grid grid-3">
+                <div class="card text-center animate-fadeIn">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Высокое качество</h3>
+                    <p>Только проверенные бренды и материалы премиум-класса</p>
+                </div>
+                
+                <div class="card text-center animate-fadeIn">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Быстрая доставка</h3>
+                    <p>Доставляем по всей России в течение 1-3 рабочих дней</p>
+                </div>
+                
+                <div class="card text-center animate-fadeIn">
+                    <div class="feature-icon">💎</div>
+                    <h3>Эксклюзивные товары</h3>
+                    <p>Уникальные коллекции, которых нет в обычных магазинах</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Категории -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="text-center mb-xl">
+                <h2>Популярные категории</h2>
+                <p class="text-lg text-gray">Найдите именно то, что вам нужно</p>
+                    </div>
+            
+            <div class="grid grid-4">
+                <a href="catalog.html" class="category-card">
+                    <div class="category-icon">✒️</div>
+                    <h3>Ручки</h3>
+                    <p>Гелевые, шариковые, авторучки</p>
+                    <span class="category-link">Смотреть →</span>
+                </a>
+                
+                <a href="catalog.html" class="category-card">
+                    <div class="category-icon">📓</div>
+                    <h3>Блокноты</h3>
+                    <p>Тетради, ежедневники, планировщики</p>
+                        <span class="category-link">Смотреть →</span>
+                </a>
+                
+                <a href="catalog.html" class="category-card">
+                    <div class="category-icon">🎨</div>
+                    <h3>Творчество</h3>
+                    <p>Маркеры, карандаши, альбомы</p>
+                    <span class="category-link">Смотреть →</span>
+                </a>
+                
+                <a href="catalog.html" class="category-card">
+                    <div class="category-icon">📁</div>
+                    <h3>Организация</h3>
+                    <p>Папки, органайзеры, аксессуары</p>
+                        <span class="category-link">Смотреть →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Статистика -->
+    <section class="section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item text-center">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Товаров в каталоге</div>
+            </div>
+                <div class="stat-item text-center">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Довольных клиентов</div>
+                            </div>
+                <div class="stat-item text-center">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Положительных отзывов</div>
+                        </div>
+                <div class="stat-item text-center">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Поддержка клиентов</div>
+                        </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные товары -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-xl">
+                <h2 style="color: #1a202c; font-weight: 700;">Популярные товары</h2>
+                <p class="text-lg" style="color: #4a5568;">Лучшие предложения для вашего творчества</p>
+            </div>
+            
+            <div class="horizontal-scroll">
+                <div class="scroll-container">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://i.ebayimg.com/images/g/XVcAAOSw24lnPcYu/s-l1600.jpg" alt="Гелевая ручка Premium">
+                        </div>
+                        <div class="product-info">
+                            <h3>Гелевая ручка Premium</h3>
+                            <p class="product-price">299 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.8)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://de2wfhoo6xqi5.cloudfront.net/orig/ca6/471/b7375af054765026dba0862d3d143b7124.jpg" alt="Шариковая ручка Classic">
+                        </div>
+                        <div class="product-info">
+                            <h3>Шариковая ручка Classic</h3>
+                            <p class="product-price">199 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.9)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://all4promo.ru/upload/iblock/a6e/a6efe55c2fa3dc7870be56db0f25f867.jpg" alt="Ручка-роллер Smooth">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ручка-роллер Smooth</h3>
+                            <p class="product-price">349 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.7)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://m.media-amazon.com/images/I/51COfAlycOS._AC_UL960_QL65_.jpg" alt="Авторучка Elegant">
+                        </div>
+                        <div class="product-info">
+                            <h3>Авторучка Elegant</h3>
+                            <p class="product-price">899 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.9)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://ir-3.ozone.ru/s3/multimedia-3/c1000/6607783767.jpg" alt="Ручка Parker Premium">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ручка Parker Premium</h3>
+                            <p class="product-price">1,299 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(5.0)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://cdn.vseinstrumenti.ru/images/goods/tovary-dlya-ofisa-i-doma/snabzhenie-i-osnaschenie-ofisa/5014854/1200x800/64868208.jpg" alt="Ручка Waterman Expert">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ручка Waterman Expert</h3>
+                            <p class="product-price">1,599 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.8)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://i.yavitrina.ru/ruchka-gelevaya-avtomaticheskaya-pilot-quot-g-2-quot-chernaya-0-5mm-grip-art-028684-100490353" alt="Ручка Pilot G2">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ручка Pilot G2</h3>
+                            <p class="product-price">249 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.6)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://avatars.mds.yandex.net/i?id=27745417407770e57c7ca3325bd0ad73_l-5435106-images-thumbs&n=13" alt="Ручка Uni-ball Signo">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ручка Uni-ball Signo</h3>
+                            <p class="product-price">179 ₽</p>
+                            <div class="product-rating">
+                                <span class="stars">⭐⭐⭐⭐⭐</span>
+                                <span class="rating-text">(4.5)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-controls">
+                    <button class="scroll-btn scroll-left" onclick="scrollLeft()">‹</button>
+                    <button class="scroll-btn scroll-right" onclick="scrollRight()">›</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA секция -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="cta-content text-center">
+                <h2>Готовы начать покупки?</h2>
+                <p class="text-lg text-gray mb-lg">
+                    Присоединяйтесь к тысячам довольных клиентов и откройте мир качественной канцелярии
+                </p>
+                <div class="cta-actions">
+                    <a href="catalog.html" class="btn btn-primary btn-lg">
+                        Перейти в каталог
+                        <span>→</span>
+                    </a>
+                    <a href="pencraft/register.php" class="btn btn-outline btn-lg">
+                        Создать аккаунт
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <style>
+        /* Специальные стили для главной страницы */
+        .hero {
+            padding: 6rem 0;
+            background: var(--gradient-primary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Улучшенные стили для кнопок в hero */
+        .hero .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            border: none;
+            color: #ffffff;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+        
+        .hero .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #0891b2 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
+        }
+        
+        .hero .btn-outline {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: #ffffff;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        .hero-visual {
+            position: relative;
+            height: 500px;
+        }
+        
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .floating-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: #ffffff;
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .floating-card:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-card:nth-child(2) {
+            top: 20%;
+            right: 20%;
+            animation-delay: 1.5s;
+        }
+        
+        .floating-card:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 3s;
+        }
+        
+        .floating-card:nth-child(4) {
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 4.5s;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-text {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .category-card {
+            background: var(--white);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--gray-800);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+            display: block;
+            text-align: center;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            text-decoration: none;
+            color: var(--gray-800);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .category-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        
+        .category-card p {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+        }
+        
+        .category-link {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cta-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Горизонтальный скролл */
+        .horizontal-scroll {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: var(--white);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .scroll-container {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .product-card {
+            flex: 0 0 280px;
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 0.75rem;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .stars {
+            font-size: 1rem;
+        }
+        
+        .rating-text {
+            font-size: 0.875rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .scroll-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .scroll-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scroll-btn:hover {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+            transform: scale(1.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .scroll-left {
+            margin-left: 1rem;
+        }
+        
+        .scroll-right {
+            margin-right: 1rem;
+        }
+        
+        
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-visual {
+                height: 300px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .product-card {
+                flex: 0 0 240px;
+            }
+            
+            .scroll-controls {
+                display: none;
+            }
+            
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-card {
+                flex: 0 0 200px;
+                padding: 1rem;
+            }
+            
+            .product-image {
+                height: 150px;
+            }
+            
+            .scroll-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        // Проверка авторизации
+        function checkAuthStatus() {
+            console.log('=== Проверка авторизации ===');
+            
+            const token = localStorage.getItem('userToken');
+            const userData = localStorage.getItem('userData');
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+            const userName = document.getElementById('userName');
+            
+            console.log('Токен:', token ? 'найден' : 'не найден');
+            console.log('Данные пользователя:', userData ? 'найдены' : 'не найдены');
+            console.log('Элементы DOM:', {
+                authButtons: !!authButtons,
+                userMenu: !!userMenu,
+                userName: !!userName
+            });
+            
+            if (token) {
+                try {
+                    // Наш токен - это просто base64 encoded JSON, не JWT
+                    const tokenData = JSON.parse(atob(token));
+                    console.log('Данные токена:', tokenData);
+                    
+                    // Проверяем, не истек ли токен
+                    if (tokenData.expires && tokenData.expires > Date.now() / 1000) {
+                        console.log('Токен действителен, показываем меню пользователя');
+                        if (authButtons) authButtons.style.display = 'none';
+                        if (userMenu) userMenu.style.display = 'flex';
+                        
+                        // Получаем имя пользователя из токена или из localStorage
+                        let displayName = tokenData.name;
+                        if (!displayName) {
+                            try {
+                                const userData = JSON.parse(localStorage.getItem('userData'));
+                                displayName = userData ? userData.name : 'Пользователь';
+                            } catch (e) {
+                                displayName = 'Пользователь';
+                            }
+                        }
+                        
+                        if (userName) userName.textContent = displayName;
+                        console.log('Пользователь авторизован:', displayName);
+                    } else {
+                        console.log('Токен истек');
+                        // Токен истек
+                        localStorage.removeItem('userToken');
+                        if (authButtons) authButtons.style.display = 'flex';
+                        if (userMenu) userMenu.style.display = 'none';
+                    }
+                } catch (e) {
+                    console.error('Ошибка парсинга токена:', e);
+                    localStorage.removeItem('userToken');
+                    if (authButtons) authButtons.style.display = 'flex';
+                    if (userMenu) userMenu.style.display = 'none';
+                }
+            } else {
+                console.log('Токен не найден, показываем кнопки входа');
+                if (authButtons) authButtons.style.display = 'flex';
+                if (userMenu) userMenu.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userToken');
+            checkAuthStatus();
+            // Показываем уведомление о выходе
+            showNotification('Вы вышли из аккаунта', 'success');
+        }
+        
+        // Функция для показа уведомлений
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#f44336' : '#4caf50'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: 500;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Обновление счетчика корзины
+        async function updateCartCount() {
+            try {
+                // Проверяем, есть ли элемент счетчика корзины на странице
+                const cartCount = document.querySelector('.cart-count');
+                if (!cartCount) {
+                    console.log('Счетчик корзины не найден на этой странице');
+                    return;
+                }
+
+                const baseUrl = window.location.protocol === 'file:' ? 'http://localhost/' : '';
+                const apiUrl = baseUrl + 'pencraft/cart_api.php';
+                
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    cartCount.textContent = data.total_items || 0;
+                }
+            } catch (error) {
+                // Тихо обрабатываем ошибки, чтобы не засорять консоль
+                console.log('Счетчик корзины недоступен (это нормально при работе без сервера)');
+            }
+        }
+
+        // Обработчик изменения статуса авторизации
+        window.addEventListener('authStatusChanged', function(event) {
+            console.log('Статус авторизации изменился:', event.detail);
+            checkAuthStatus();
+        });
+        
+        // Обработчик изменения localStorage (для синхронизации между вкладками)
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'userToken') {
+                console.log('Токен изменился в другой вкладке');
+                checkAuthStatus();
+            }
+        });
+
+        // Функции для горизонтального скролла
+        function scrollLeft() {
+            const container = document.querySelector('.scroll-container');
+            if (container) {
+                container.scrollBy({
+                    left: -300,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        function scrollRight() {
+            const container = document.querySelector('.scroll-container');
+            if (container) {
+                container.scrollBy({
+                    left: 300,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // Автоматическое скрытие кнопок скролла
+        function updateScrollButtons() {
+            const container = document.querySelector('.scroll-container');
+            const leftBtn = document.querySelector('.scroll-left');
+            const rightBtn = document.querySelector('.scroll-right');
+            
+            if (container && leftBtn && rightBtn) {
+                const scrollLeft = container.scrollLeft;
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                
+                leftBtn.style.opacity = scrollLeft <= 0 ? '0.3' : '1';
+                rightBtn.style.opacity = scrollLeft >= maxScroll - 10 ? '0.3' : '1';
+            }
+        }
+        
+        // Обработчики событий для скролла
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.scroll-container');
+            if (container) {
+                container.addEventListener('scroll', updateScrollButtons);
+                updateScrollButtons(); // Инициализация состояния кнопок
+            }
+        });
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
